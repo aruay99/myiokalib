@@ -5,9 +5,12 @@ import requests
 class Customer:
     BASE_URL = 'https://api.ioka.com/v2/customers'  # Replace with the actual base URL
 
-    def get_customers(self, api_key, limit=10, page=1, to_dt=None, from_dt=None, date_category=None,
+    def __init__(self, api_key=None):
+        self.api_key = api_key
+
+    def get_customers(self, limit=10, page=1, to_dt=None, from_dt=None, date_category=None,
                       customer_id=None, external_id=None, status=None):
-        headers = {'Authorization': f'Bearer {api_key}'}
+        headers = {'Authorization': f'Bearer {self.api_key}'}
         params = {
             "limit": limit,
             "page": page,
@@ -21,8 +24,8 @@ class Customer:
         response = requests.get(self.BASE_URL, headers=headers, params=params)
         return handle_response(response)
 
-    def create_customer(self, api_key, external_id, email, phone, fingerprint=None, phone_check_date=None, channel=None):
-        headers = {'Authorization': f'Bearer {api_key}', 'Content-Type': 'application/json'}
+    def create_customer(self, external_id, email, phone, fingerprint=None, phone_check_date=None, channel=None):
+        headers = {'Authorization': f'Bearer {self.api_key}', 'Content-Type': 'application/json'}
         payload = {
             "external_id": external_id,
             "email": email,
@@ -40,8 +43,8 @@ class Customer:
         response = requests.get(url, headers=headers)
         return handle_response(response)
 
-    def delete_customer_by_id(self, api_key, customer_id):
-        headers = {'Authorization': f'Bearer {api_key}'}
+    def delete_customer_by_id(self, customer_id):
+        headers = {'Authorization': f'Bearer {self.api_key}'}
         url = f'{self.BASE_URL}/{customer_id}'
         response = requests.delete(url, headers=headers)
         result = handle_response(response)

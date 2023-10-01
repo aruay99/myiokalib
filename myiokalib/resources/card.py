@@ -6,6 +6,7 @@ BASE_URL = 'https://api.example.com/v2'
 
 
 class Card:
+
     def create_binding(self, customer_id, pan, exp, cvc, holder=None, token=None):
         url = f'{BASE_URL}/customers/{customer_id}/bindings'
         headers = {'Authorization': f'Bearer {token}'}
