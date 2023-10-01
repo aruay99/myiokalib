@@ -1,20 +1,17 @@
-
 import requests
 from ..utils import handle_response
 
 
 class Order:
-    BASE_URL = 'https://stage-api.ioka.kz/v2/orders'
+    BASE_URL = 'https://stage-api.ioka.kz'
 
     def __init__(self, api_key=None):
         self.api_key = api_key
-
 
     def create(self, amount, currency="KZT", capture_method="AUTO", external_id=None,
                description=None, mcc=None, extra_info=None, attempts=10, due_date=None,
                customer_id=None, card_id=None, back_url=None, success_url=None,
                failure_url=None, template=None):
-
         headers = {
             'Authorization': f'Bearer {self.api_key}',
             'Content-Type': 'application/json'
@@ -67,8 +64,6 @@ class Order:
         return handle_response(response)
 
     def get_order_by_id(self, order_id):
-
-
         headers = {
             'Authorization': f'Bearer {self.api_key}'
         }
@@ -76,8 +71,8 @@ class Order:
         url = f'{self.BASE_URL}/{order_id}'
         response = requests.get(url, headers=headers)
         return handle_response(response, order_id)
-    def update_order_by_id(self, order_id, amount):
 
+    def update_order_by_id(self, order_id, amount):
         headers = {
             'Authorization': f'Bearer {self.api_key}',
             'Content-Type': 'application/json'
@@ -92,7 +87,6 @@ class Order:
         return handle_response(response, order_id)
 
     def cancel_order(self, order_id, reason):
-
         headers = {
             'Authorization': f'Bearer {self.api_key}',
             'Content-Type': 'application/json'
@@ -107,7 +101,6 @@ class Order:
         return handle_response(response, order_id)
 
     def get_receipt(self, order_id):
-
         headers = {
             'Authorization': f'Bearer {self.api_key}'
         }
@@ -115,6 +108,3 @@ class Order:
         url = f'{self.BASE_URL}/{order_id}/receipt'
         response = requests.get(url, headers=headers)
         return handle_response(response, order_id)
-
-
-

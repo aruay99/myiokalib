@@ -3,7 +3,8 @@ from .exceptions import (
     InvalidRequestError,
     UnauthorizedError,
     ForbiddenError,
-    NotFoundError
+    NotFoundError,
+    IokaAPIError
 )
 def handle_response(response, order_id=None):
     if response.status_code == 200:
@@ -23,7 +24,7 @@ def handle_response(response, order_id=None):
         raise NotFoundError(error_message)
     # Handle other status codes as needed
     else:
-        raise APIError(f"HTTP Error {response.status_code}")
+        raise IokaAPIError(f"HTTP Error {response.status_code}")
 
     return None  # Return None for cases where an error is raised
 
