@@ -3,7 +3,7 @@ from ..utils import handle_response
 
 
 class Order:
-    BASE_URL = 'https://stage-api.ioka.kz'
+    BASE_URL = 'https://stage-api.ioka.kz/orders'
 
     def __init__(self, api_key=None):
         self.api_key = api_key
@@ -13,7 +13,7 @@ class Order:
                customer_id=None, card_id=None, back_url=None, success_url=None,
                failure_url=None, template=None):
         headers = {
-            'Authorization': f'Bearer {self.api_key}',
+            'API-KEY': self.api_key,
             'Content-Type': 'application/json'
         }
 
@@ -26,7 +26,6 @@ class Order:
             "mcc": mcc,
             "extra_info": extra_info,
             "attempts": attempts,
-            "due_date": due_date,
             "customer_id": customer_id,
             "card_id": card_id,
             "back_url": back_url,
@@ -34,6 +33,8 @@ class Order:
             "failure_url": failure_url,
             "template": template
         }
+        if due_date is not None:
+            payload["due_date"] = due_date
 
         response = requests.post(self.BASE_URL, headers=headers, json=payload)
         return handle_response(response)

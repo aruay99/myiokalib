@@ -19,4 +19,5 @@ venv/
 # Exclude egg-info directory (generated during packaging)
 *.egg-info/
 
-testing.py
+testing22.py
+hi.py
