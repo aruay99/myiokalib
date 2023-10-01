@@ -1,5 +1,4 @@
 
-from config import self.api_key
 import requests
 from ..utils import handle_response
 
