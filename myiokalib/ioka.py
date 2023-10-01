@@ -63,8 +63,8 @@ class IokaAPI:
             external_id=external_id, description=description, mcc=mcc,
             extra_info=extra_info, attempts=attempts, due_date=due_date,
             customer_id=customer_id, card_id=card_id, back_url=back_url,
-            success_url=success_url, failure_url=failure_url, template=template,
-            token=self.api_key
+            success_url=success_url, failure_url=failure_url, template=template
+
         )
 
     def get_orders(self, page=1, limit=10, to_dt=None, from_dt=None, date_category=None,
@@ -75,47 +75,47 @@ class IokaAPI:
             date_category=date_category, order_id=order_id,
             external_id=external_id, order_status=order_status,
             amount_category=amount_category, fixed_amount=fixed_amount,
-            min_amount=min_amount, max_amount=max_amount, token=self.api_key
+            min_amount=min_amount, max_amount=max_amount
         )
 
     def get_order_by_id(self, order_id):
         return self.order.get_order_by_id(order_id)
 
     def update_order_by_id(self, order_id, amount):
-        return self.order.update_order_by_id(order_id, amount, token=self.api_key)
+        return self.order.update_order_by_id(order_id, amount)
 
     def cancel_order(self, order_id, reason):
-        return self.order.cancel_order(order_id, reason, token=self.api_key)
+        return self.order.cancel_order(order_id, reason)
 
     def get_receipt(self, order_id):
         return self.order.get_receipt(order_id)
 
     def get_payments(self, page=1, limit=10):
-        return self.payment.get_payments(page=page, limit=limit, token=self.api_key)
+        return self.payment.get_payments(page=page, limit=limit)
 
     def create_card_payment(self, order_id, pan, exp, cvc):
-        return self.payment.create_card_payment(order_id, pan, exp, cvc, token=self.api_key)
+        return self.payment.create_card_payment(order_id, pan, exp, cvc)
 
     def create_tool_payment(self, order_id, tool_type, apple_pay=None, google_pay=None):
-        return self.payment.create_tool_payment(order_id, tool_type, apple_pay, google_pay, token=self.api_key)
+        return self.payment.create_tool_payment(order_id, tool_type, apple_pay, google_pay)
 
     def get_payment_by_id(self, order_id, payment_id):
         return self.payment.get_payment_by_id(order_id, payment_id)
 
     def get_webhooks(self):
-        return self.webhook.get_webhooks(token=self.api_key)
+        return self.webhook.get_webhooks()
 
     def create_webhook(self, url, events):
-        return self.webhook.create_webhook(url, events, token=self.api_key)
+        return self.webhook.create_webhook(url, events)
 
     def get_webhook_by_id(self, webhook_id):
-        return self.webhook.get_webhook_by_id(webhook_id, token=self.api_key)
+        return self.webhook.get_webhook_by_id(webhook_id)
 
     def delete_webhook_by_id(self, webhook_id):
-        return self.webhook.delete_webhook_by_id(webhook_id, token=self.api_key)
+        return self.webhook.delete_webhook_by_id(webhook_id)
 
     def update_webhook_by_id(self, webhook_id, url, events):
-        return self.webhook.update_webhook_by_id(webhook_id, url, events, token=self.api_key)
+        return self.webhook.update_webhook_by_id(webhook_id, url, events)
 
 
 
