@@ -5,22 +5,25 @@ from .exceptions import (
     ForbiddenError,
     NotFoundError
 )
-
 def handle_response(response, order_id=None):
-    if response.status_code in [200, 201]:
+    if response.status_code == 200:
         return response.json()
-    elif response.status_code == 204:
-        return "Successfully deleted"
     elif response.status_code == 400:
-        raise InvalidRequestError(response.json()['error_message'])
+        # Check if 'error_message' key exists in the response JSON
+        error_message = response.json().get('error_message', 'Unknown error')
+        raise InvalidRequestError(error_message)
     elif response.status_code == 401:
-        raise UnauthorizedError(response.json()['error_message'])
+        error_message = response.json().get('error_message', 'Unauthorized')
+        raise UnauthorizedError(error_message)
     elif response.status_code == 403:
-        raise ForbiddenError(response.json()['error_message'])
+        error_message = response.json().get('error_message', 'Forbidden')
+        raise ForbiddenError(error_message)
     elif response.status_code == 404:
-        if order_id:
-            raise NotFoundError(f"Order with ID {order_id} not found.")
-        else:
-            raise NotFoundError(response.json()['error_message'])
+        error_message = response.json().get('error_message', 'Not Found')
+        raise NotFoundError(error_message)
+    # Handle other status codes as needed
     else:
-        raise APIException(f"An error occurred: HTTP {response.status_code}")
+        raise APIError(f"HTTP Error {response.status_code}")
+
+    return None  # Return None for cases where an error is raised
+
