@@ -1,0 +1,20 @@
+# Exclude Python cache files
+__pycache__/
+
+# Exclude pytest cache directory
+.pytest_cache/
+
+# Exclude build and distribution directories
+build/
+dist/
+
+# Exclude virtual environment directories
+venv/
+
+# Exclude compiled Python files
+*.pyc
+*.pyo
+*.pyd
+
+# Exclude egg-info directory (generated during packaging)
+*.egg-info/
