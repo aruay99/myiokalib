@@ -1,7 +1,6 @@
 
-from .api import IokaAPI
-from myiokalib.resources.customer import Customer
-from myiokalib.resources.order import Order
-from myiokalib.resources.card import Card
-from myiokalib.resources.payment import Payment
-from myiokalib.resources.webhook import Webhook
+from .ioka import IokaAPI
+from .resources import Order, Payment, Customer,Card,Webhook
+
+__all__ = ["IokaAPI", "Order", "Payment", "Customer", "Card", "Webhook"]
+

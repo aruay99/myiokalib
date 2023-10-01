@@ -1,4 +1,9 @@
-from myiokalib.resources import Order, Payment, Customer, Card, Webhook
+from myiokalib.resources.customer import Customer
+from myiokalib.resources.order import Order
+from myiokalib.resources.card import Card
+from myiokalib.resources.payment import Payment
+from myiokalib.resources.webhook import Webhook
+# Create a variable to store the API key
 api_key = None
 
 # Function to initialize the API key
