@@ -15,11 +15,11 @@ def init(api_key_value):
 class IokaAPI:
     def __init__(self, api_key):
         self.api_key = api_key
-        self.order = Order(api_key)
-        self.payment = Payment(api_key)
-        self.customer = Customer(api_key)
+        self.order = Order()
+        self.payment = Payment()
+        self.customer = Customer()
         self.card = Card()
-        self.webhook = Webhook(api_key)
+        self.webhook = Webhook()
 
     def create_binding(self, customer_id, pan, exp, cvc, holder=None):
         return self.card.create_binding(customer_id, pan, exp, cvc, holder, token=self.api_key)
