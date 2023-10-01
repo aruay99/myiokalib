@@ -4,7 +4,7 @@ from ..utils import handle_response
 
 
 class Order:
-    BASE_URL = 'https://api.ioka.com/v2/orders'
+    BASE_URL = 'https://stage-api.ioka.kz/v2/orders'
 
     def __init__(self, api_key=None):
         self.api_key = api_key

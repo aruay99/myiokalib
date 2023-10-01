@@ -2,7 +2,7 @@ import requests
 from ..utils import handle_response
 from ..exceptions import APIException
 
-BASE_URL = 'https://api.example.com/v2'
+BASE_URL = 'https://stage-api.ioka.kz/v2'
 
 
 class Card:

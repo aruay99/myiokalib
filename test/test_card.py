@@ -2,7 +2,7 @@ import pytest
 import responses
 from myiokalib.resources.card import Card
 
-BASE_URL = 'https://api.example.com/v2'
+BASE_URL = 'https://stage-api.ioka.kz/v2'
 
 
 @responses.activate

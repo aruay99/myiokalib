@@ -3,7 +3,7 @@ from ..utils import handle_response
 import requests
 
 class Customer:
-    BASE_URL = 'https://api.ioka.com/v2/customers'  # Replace with the actual base URL
+    BASE_URL = 'https://stage-api.ioka.kz/v2/customers'  # Replace with the actual base URL
 
     def __init__(self, api_key=None):
         self.api_key = api_key

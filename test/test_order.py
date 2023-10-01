@@ -8,7 +8,7 @@ from myiokalib.exceptions import InvalidRequestError, IokaAPIError, NotFoundErro
 def test_order_creation_success():
     responses.add(
         responses.POST,
-        'https://api.ioka.com/v2/orders',
+        'https://stage-api.ioka.kz/v2/orders',
         json={'order_id': '12345'},
         status=201
     )
@@ -21,7 +21,7 @@ def test_order_creation_success():
 def test_order_creation_invalid_request():
     responses.add(
         responses.POST,
-        'https://api.ioka.com/v2/orders',
+        'https://stage-api.ioka.kz/v2/orders',
         json={'error_message': 'Invalid request'},
         status=400
     )
@@ -34,7 +34,7 @@ def test_order_creation_invalid_request():
 def test_order_creation_api_error():
     responses.add(
         responses.POST,
-        'https://api.ioka.com/v2/orders',
+        'https://stage-api.ioka.kz/v2/orderss',
         status=500
     )
 
@@ -46,7 +46,7 @@ def test_order_creation_api_error():
 def test_get_orders_success():
     responses.add(
         responses.GET,
-        'https://api.ioka.com/v2/orders',
+        'https://stage-api.ioka.kz/v2/orderss',
         json=[
             {
                 "created_at": "string",
@@ -99,7 +99,7 @@ def test_get_orders_success():
 def test_get_orders_invalid_request():
     responses.add(
         responses.GET,
-        'https://api.ioka.com/v2/orders',
+        'https://stage-api.ioka.kz/v2/orders',
         json={'error_message': 'Invalid request'},
         status=400
     )
@@ -112,7 +112,7 @@ def test_get_orders_invalid_request():
 def test_get_orders_api_error():
     responses.add(
         responses.GET,
-        'https://api.ioka.com/v2/orders',
+        'https://stage-api.ioka.kz/v2/orders',
         status=500
     )
 
@@ -124,7 +124,7 @@ def test_get_orders_api_error():
 def test_get_order_by_id_success():
     responses.add(
         responses.GET,
-        'https://api.ioka.com/v2/orders/12345',
+        'https://stage-api.ioka.kz/v2/orders/12345',
         json={
             "id": "12345",
             "status": "EXPIRED",
@@ -145,7 +145,7 @@ def test_get_order_by_id_success():
 def test_get_order_by_id_not_found():
     responses.add(
         responses.GET,
-        'https://api.ioka.com/v2/orders/12345',
+        'https://stage-api.ioka.kz/v2/orders/12345',
         status=404
     )
 
@@ -158,7 +158,7 @@ def test_update_order_by_id():
     # Mock the API response
     responses.add(
         responses.PATCH,
-        'https://api.ioka.com/v2/orders/order_id',
+        'https://stage-api.ioka.kz/v2/orders/order_id',
         json={'id': 'order_id', 'amount': 50000},
         status=200
     )
@@ -173,7 +173,7 @@ def test_update_order_by_id_not_found():
     # Mock the API response for order not found
     responses.add(
         responses.PATCH,
-        'https://api.ioka.com/v2/orders/non_existent_order_id',
+        'https://stage-api.ioka.kz/v2/orders/non_existent_order_id',
         json={'error_message': 'Order not found'},
         status=404
     )
@@ -187,7 +187,7 @@ def test_update_order_by_id_invalid_request():
     # Mock the API response for invalid request
     responses.add(
         responses.PATCH,
-        'https://api.ioka.com/v2/orders/order_id',
+        'https://stage-api.ioka.kz/v2/orders/order_id',
         json={'error_message': 'Invalid amount'},
         status=400
     )
@@ -201,7 +201,7 @@ def test_cancel_order():
     # Mock the API response
     responses.add(
         responses.POST,
-        'https://api.ioka.com/v2/orders/order_id/cancel',
+        'https://stage-api.ioka.kz/v2/orders/order_id/cancel',
         json={'id': 'order_id', 'status': 'CANCELED'},
         status=200
     )
@@ -216,7 +216,7 @@ def test_cancel_order_not_found():
     # Mock the API response for order not found
     responses.add(
         responses.POST,
-        'https://api.ioka.com/v2/orders/non_existent_order_id/cancel',
+        'https://stage-api.ioka.kz/v2/orders/non_existent_order_id/cancel',
         json={'error_message': 'Order not found'},
         status=404
     )
@@ -230,7 +230,7 @@ def test_cancel_order_invalid_request():
     # Mock the API response for invalid request
     responses.add(
         responses.POST,
-        'https://api.ioka.com/v2/orders/order_id/cancel',
+        'https://stage-api.ioka.kz/v2/orders/orders/order_id/cancel',
         json={'error_message': 'Invalid reason'},
         status=400
     )
@@ -244,7 +244,7 @@ def test_get_receipt():
     # Mock the API response
     responses.add(
         responses.GET,
-        'https://api.ioka.com/v2/orders/order_id/receipt',
+        'https://stage-api.ioka.kz/v2/orders/order_id/receipt',
         json={'receipt_data': 'some_data'},
         status=200
     )
@@ -259,7 +259,7 @@ def test_get_receipt_not_found():
     # Mock the API response for order not found
     responses.add(
         responses.GET,
-        'https://api.ioka.com/v2/orders/non_existent_order_id/receipt',
+        'https://stage-api.ioka.kz/v2/orders/non_existent_order_id/receipt',
         json={'error_message': 'Order not found'},
         status=404
     )

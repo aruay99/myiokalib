@@ -1,15 +1,15 @@
 
 from ..utils import handle_response
 import requests
-BASE_URL = 'https://api.example.com/v2'
+BASE_URL = 'https://stage-api.ioka.kz/v2/orders/'
 
 
 class Payment:
     def __init__(self, api_key=None):
         self.api_key = api_key
 
-    def get_payments(self, page=1, limit=10):
-        url = f'{BASE_URL}/orders/payments'
+    def get_payments(self, order_id, page=1, limit=10):
+        url = f'{BASE_URL}/{order_id}/payments'
         headers = {'Authorization': f'Bearer {self.api_key}'}
         params = {'page': page, 'limit': limit}
         response = requests.get(url, headers=headers, params=params)

@@ -10,7 +10,7 @@ def test_get_webhooks():
         status=200
     )
     webhook = Webhook()
-    result = webhook.get_webhooks(api_key='test_api_key')
+    result = webhook.get_webhooks()
     assert result == [{'url': 'http://example.com', 'id': 'webhook_id'}]
 
 
@@ -23,7 +23,7 @@ def test_create_webhook():
         status=201
     )
     webhook = Webhook()
-    result = webhook.create_webhook(api_key='test_api_key', url='http://example.com', events=['ORDER_EXPIRED'])
+    result = webhook.create_webhook( url='http://example.com', events=['ORDER_EXPIRED'])
     assert result == {'url': 'http://example.com', 'id': 'webhook_id'}
 
 
@@ -36,7 +36,7 @@ def test_get_webhook_by_id():
         status=200
     )
     webhook = Webhook()
-    result = webhook.get_webhook_by_id(api_key='test_api_key', webhook_id='webhook_id')
+    result = webhook.get_webhook_by_id( webhook_id='webhook_id')
     assert result == {'url': 'http://example.com', 'id': 'webhook_id'}
 
 
@@ -48,7 +48,7 @@ def test_delete_webhook_by_id():
         status=204
     )
     webhook = Webhook()
-    result = webhook.delete_webhook_by_id(api_key='test_api_key', webhook_id='webhook_id')
+    result = webhook.delete_webhook_by_id( webhook_id='webhook_id')
     assert result == "Successfully deleted"
 
 
@@ -61,5 +61,5 @@ def test_update_webhook_by_id():
         status=200
     )
     webhook = Webhook()
-    result = webhook.update_webhook_by_id(api_key='test_api_key', webhook_id='webhook_id', url='http://example.com', events=['ORDER_EXPIRED'])
+    result = webhook.update_webhook_by_id( webhook_id='webhook_id', url='http://example.com', events=['ORDER_EXPIRED'])
     assert result == {'url': 'http://example.com', 'id': 'webhook_id'}
