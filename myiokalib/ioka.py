@@ -7,9 +7,6 @@ from myiokalib.resources.webhook import Webhook
 api_key = None
 
 # Function to initialize the API key
-def init(api_key_value):
-    global api_key
-    api_key = api_key_value
 
 # Define the classes and functions for user interaction
 class IokaAPI:
