@@ -19,10 +19,6 @@ from myiokalib.resources.payment import Payment
 # Initialize the API key
 IokaAPI.set_api_key("your_api_key")
 
-# Create an order
-order_data = {
-    # Order data here
-}
 order_api = Order()
 # Create an order
 response = order_api.create(amount=100, capture_method="MANUAL")
