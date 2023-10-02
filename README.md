@@ -10,20 +10,25 @@ pip install git+https://github.com/aruay99/myiokalib.git
 ## Usage
 
 ```python
-import myiokalib
+
+
+from myiokalib.ioka import IokaAPI
+from myiokalib.resources.order import Order
+from myiokalib.resources.payment import Payment
 
 # Initialize the API key
-myiokalib.init("your_api_key")
+IokaAPI.set_api_key("your_api_key")
 
 # Create an order
 order_data = {
     # Order data here
 }
-order = myiokalib.IokaAPI().create_order(order_data)
-
+order_api = Order()
+# Create an order
+response = order_api.create(amount=100, capture_method="MANUAL")
 # Get an order by ID
 order_id = "ord_123"
-order = myiokalib.IokaAPI().get_order(order_id)
+order = order_api.get_order_by_id(order_id)
 
 # More examples here
 ```

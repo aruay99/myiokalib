@@ -1,44 +1,35 @@
 
 from ..utils import handle_response
 import requests
-BASE_URL = 'https://stage-api.ioka.kz/v2/orders/'
+from myiokalib.ioka import IokaAPI
+BASE_URL = 'https://stage-api.ioka.kz/v2/orders'
 
 
 class Payment:
     def __init__(self, api_key=None):
-        self.api_key = api_key
+        self.api_key = IokaAPI.load_api_key()
 
-    def get_payments(self, order_id, page=1, limit=10):
-        url = f'{BASE_URL}/{order_id}/payments'
-        headers = {'Authorization': f'Bearer {self.api_key}'}
-        params = {'page': page, 'limit': limit}
-        response = requests.get(url, headers=headers, params=params)
-        return handle_response(response)
 
     def create_card_payment(self, order_id, pan, exp, cvc):
-        url = f'{BASE_URL}/orders/{order_id}/payments/card'
-        headers = {'Authorization': f'Bearer {self.api_key}'}
+        url = f'{BASE_URL}/{order_id}/payments/card'
+        headers = {
+            'Content-Type': 'application/json'
+        }
         data = {
             'pan': pan,
             'exp': exp,
             'cvc': cvc
         }
         response = requests.post(url, headers=headers, json=data)
-        return handle_response(response)
 
-    def create_tool_payment(self, order_id, tool_type, apple_pay=None, google_pay=None):
-        url = f'{BASE_URL}/orders/{order_id}/payments/tool'
-        headers = {'Authorization': f'Bearer {self.api_key}'}
-        data = {
-            'tool_type': tool_type,
-            'apple_pay': apple_pay,
-            'google_pay': google_pay
-        }
-        response = requests.post(url, headers=headers, json=data)
-        return handle_response(response)
+        if response.status_code == 201:
+            return response.json()
+        else:
+            return handle_response(response)  # Handle other non-successful responses
+
 
     def get_payment_by_id(self, order_id, payment_id):
-        url = f'{BASE_URL}/orders/{order_id}/payments/{payment_id}'
-        headers = {'Authorization': f'Bearer {self.api_key}'}
+        url = f'{BASE_URL}/{order_id}/payments/{payment_id}'
+        headers = {'API-KEY': self.api_key}
         response = requests.get(url, headers=headers)
         return handle_response(response)

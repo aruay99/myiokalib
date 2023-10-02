@@ -1,22 +1,21 @@
-from myiokalib.resources.customer import Customer
-from myiokalib.resources.order import Order
-from myiokalib.resources.card import Card
-from myiokalib.resources.payment import Payment
-from myiokalib.resources.webhook import Webhook
-# Create a variable to store the API key
-api_key = None
-
-
-
-
-
-
+import json
 class IokaAPI:
     def __init__(self, api_key):
         self.api_key = api_key
 
-def initialize_ioka(api_key):
-    return IokaAPI(api_key)
+    @staticmethod
+    def set_api_key(api_key):
+        # Save the API key to a configuration file or settings module
+        with open('config.json', 'w') as config_file:
+            json.dump({"api_key": api_key}, config_file)
+
+    def load_api_key():
+        try:
+            with open('config.json', 'r') as config_file:
+                config_data = json.load(config_file)
+                return config_data.get('api_key', None)
+        except FileNotFoundError:
+            return None
 
 
 

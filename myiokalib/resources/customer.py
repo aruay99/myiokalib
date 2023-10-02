@@ -1,16 +1,17 @@
 
 from ..utils import handle_response
 import requests
+from myiokalib.ioka import IokaAPI
 
 class Customer:
     BASE_URL = 'https://stage-api.ioka.kz/v2/customers'  # Replace with the actual base URL
 
     def __init__(self, api_key=None):
-        self.api_key = api_key
+        self.api_key = IokaAPI.load_api_key()
 
     def get_customers(self, limit=10, page=1, to_dt=None, from_dt=None, date_category=None,
                       customer_id=None, external_id=None, status=None):
-        headers = {'Authorization': f'Bearer {self.api_key}'}
+        headers = {'API_KEY': self.api_key}
         params = {
             "limit": limit,
             "page": page,
@@ -25,7 +26,10 @@ class Customer:
         return handle_response(response)
 
     def create_customer(self, external_id, email, phone, fingerprint=None, phone_check_date=None, channel=None):
-        headers = {'Authorization': f'Bearer {self.api_key}', 'Content-Type': 'application/json'}
+        headers = {
+            'API_KEY': self.api_key,
+            'Content-Type': 'application/json'
+        }
         payload = {
             "external_id": external_id,
             "email": email,
@@ -37,14 +41,14 @@ class Customer:
         response = requests.post(self.BASE_URL, headers=headers, json=payload)
         return handle_response(response)
 
-    def get_customer_by_id(self, customer_access_token, customer_id):
-        headers = {'Authorization': f'Bearer {customer_access_token}'}
+    def get_customer_by_id(self,customer_id):
+        headers = {}
         url = f'{self.BASE_URL}/{customer_id}'
         response = requests.get(url, headers=headers)
         return handle_response(response)
 
     def delete_customer_by_id(self, customer_id):
-        headers = {'Authorization': f'Bearer {self.api_key}'}
+        headers = {'API_KEY': self.api_key,}
         url = f'{self.BASE_URL}/{customer_id}'
         response = requests.delete(url, headers=headers)
         result = handle_response(response)

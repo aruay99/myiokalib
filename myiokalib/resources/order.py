@@ -1,15 +1,17 @@
-import requests
 from ..utils import handle_response
+import requests
+from ..ioka import IokaAPI
+import datetime
 
 
 class Order:
-    BASE_URL = 'https://stage-api.ioka.kz/orders'
+    BASE_URL = 'https://stage-api.ioka.kz/v2/orders'
 
     def __init__(self, api_key=None):
-        self.api_key = api_key
+        self.api_key = IokaAPI.load_api_key()
 
-    def create(self, amount, currency="KZT", capture_method="AUTO", external_id=None,
-               description=None, mcc=None, extra_info=None, attempts=10, due_date=None,
+    def create(self, amount: int, currency="KZT", capture_method="AUTO", external_id=None,
+               description=None, mcc=None, extra_info={ }, attempts=10, due_date=None,
                customer_id=None, card_id=None, back_url=None, success_url=None,
                failure_url=None, template=None):
         headers = {
@@ -17,8 +19,12 @@ class Order:
             'Content-Type': 'application/json'
         }
 
+        if due_date is None:
+            # You can set a default value like 7 days from now
+            due_date = datetime.datetime.now() + datetime.timedelta(days=7)
+
         payload = {
-            "amount": amount,
+            "amount": int(amount),
             "currency": currency,
             "capture_method": capture_method,
             "external_id": external_id,
@@ -29,21 +35,23 @@ class Order:
             "customer_id": customer_id,
             "card_id": card_id,
             "back_url": back_url,
+            "due_date": due_date.isoformat() if due_date else None,
             "success_url": success_url,
             "failure_url": failure_url,
             "template": template
         }
-        if due_date is not None:
-            payload["due_date"] = due_date
+
 
         response = requests.post(self.BASE_URL, headers=headers, json=payload)
-        return handle_response(response)
+        return response
+
+
 
     def get_orders(self, page=1, limit=10, to_dt=None, from_dt=None, date_category=None,
                    order_id=None, external_id=None, order_status=None, amount_category=None,
                    fixed_amount=None, min_amount=None, max_amount=None):
         headers = {
-            'Authorization': f'Bearer {self.api_key}'
+            'API-KEY': self.api_key,
         }
 
         params = {
@@ -66,7 +74,7 @@ class Order:
 
     def get_order_by_id(self, order_id):
         headers = {
-            'Authorization': f'Bearer {self.api_key}'
+            'API-KEY': self.api_key,
         }
 
         url = f'{self.BASE_URL}/{order_id}'
@@ -75,7 +83,7 @@ class Order:
 
     def update_order_by_id(self, order_id, amount):
         headers = {
-            'Authorization': f'Bearer {self.api_key}',
+            'API-KEY': self.api_key,
             'Content-Type': 'application/json'
         }
 
@@ -89,7 +97,7 @@ class Order:
 
     def cancel_order(self, order_id, reason):
         headers = {
-            'Authorization': f'Bearer {self.api_key}',
+            'API-KEY': self.api_key,
             'Content-Type': 'application/json'
         }
 
@@ -101,11 +109,4 @@ class Order:
         response = requests.post(url, headers=headers, json=payload)
         return handle_response(response, order_id)
 
-    def get_receipt(self, order_id):
-        headers = {
-            'Authorization': f'Bearer {self.api_key}'
-        }
 
-        url = f'{self.BASE_URL}/{order_id}/receipt'
-        response = requests.get(url, headers=headers)
-        return handle_response(response, order_id)
